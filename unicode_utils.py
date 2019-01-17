@@ -1,7 +1,7 @@
-def compound_unicode(unicode_str):
+def compound2unicode(unicode_str):
   """
   Chuyển đổi chuỗi Unicode Tổ Hợp sang Unicode Dựng Sẵn
-  Edited from: `https://gist.github.com/redphx/9320735`
+  From: `https://gist.github.com/redphx/9320735`
   """
   unicode_str = unicode_str.replace("\u0065\u0309", "\u1EBB")    # ẻ
   unicode_str = unicode_str.replace("\u0065\u0301", "\u00E9")    # é
