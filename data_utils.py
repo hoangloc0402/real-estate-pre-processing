@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[1]:
+# In[17]:
 
 
 import re
@@ -9,7 +9,7 @@ import string
 import unicodedata
 
 
-# In[2]:
+# In[18]:
 
 
 token = dict()
@@ -17,12 +17,13 @@ token['int'] = 'INT'
 token['float'] = 'FLOAT'
 token['space'] = ' '
 token['blank'] = ''
+token['dot'] = '.'
 vietnamese_chars = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝ'
 vietnamese_chars += 'àáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠạẢảẤấẦầẨẩẪẫẬậẮắẰằẲẳẴẵẶặẸẹẺẻẼẽẾếỀềỂểỄễỆệ'
 vietnamese_chars += 'ỈỉỊịỌọỎỏỐốỒồỔổỖỗỘộỚớỜờỞởỠỡỢợỤụỦủỨứỪừỬửỮữỰựỲỳỴỵỶỷỸỹ'
 
 
-# In[3]:
+# In[19]:
 
 
 # \w = [a-zA-Z0-9_]
@@ -33,10 +34,12 @@ def remove_special_char(text):
     text = re.sub('[^\w\s'+ vietnamese_chars +'\.]+|[_]+', token['space'], text)   
     # remove multi space with single space   
     text = re.sub('\s+', token['space'], text)
+    # remove multi dot with one dot   
+    text = re.sub('\.+', token['dot'], text)
     return text
 
 
-# In[4]:
+# In[20]:
 
 
 def add_token(text):
@@ -47,7 +50,7 @@ def add_token(text):
     return text
 
 
-# In[5]:
+# In[21]:
 
 
 def clean_text(text):
