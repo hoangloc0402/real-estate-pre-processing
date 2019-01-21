@@ -1,15 +1,16 @@
 
 # coding: utf-8
 
-# In[17]:
+# In[41]:
 
 
 import re
 import string
 import unicodedata
+from pyvi import ViTokenizer, ViPosTagger
 
 
-# In[18]:
+# In[42]:
 
 
 token = dict()
@@ -18,12 +19,13 @@ token['float'] = 'FLOAT'
 token['space'] = ' '
 token['blank'] = ''
 token['dot'] = '.'
+SPECIAL_CHARACTER = '0123456789%@$.,=+-!;/()*"&^:#|\n\t\''
 vietnamese_chars = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝ'
 vietnamese_chars += 'àáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠạẢảẤấẦầẨẩẪẫẬậẮắẰằẲẳẴẵẶặẸẹẺẻẼẽẾếỀềỂểỄễỆệ'
 vietnamese_chars += 'ỈỉỊịỌọỎỏỐốỒồỔổỖỗỘộỚớỜờỞởỠỡỢợỤụỦủỨứỪừỬửỮữỰựỲỳỴỵỶỷỸỹ'
 
 
-# In[19]:
+# In[43]:
 
 
 # \w = [a-zA-Z0-9_]
@@ -39,7 +41,7 @@ def remove_special_char(text):
     return text
 
 
-# In[20]:
+# In[44]:
 
 
 def add_token(text):
@@ -50,7 +52,7 @@ def add_token(text):
     return text
 
 
-# In[21]:
+# In[45]:
 
 
 def clean_text(text):
@@ -67,4 +69,19 @@ def clean_text(text):
     # text = re.sub(r'0[ ]*[.,]+[ ]*0', '00', text)
     text = re.sub('[\n\r]+', ' | ', text)
     return re.sub(r'[ ]+', ' ', text), numbers
+
+
+# In[46]:
+
+
+def tokenize(text):
+    return ViTokenizer.tokenize(text)
+
+
+# In[47]:
+
+
+def pos_tagging(text):
+    tok = tokenize(text)
+    return ViPosTagger.postagging(tok)
 
