@@ -5,7 +5,10 @@
 
 
 import re
+import glob
 import string
+import ast
+import unicode_utils 
 import unicodedata
 from pyvi import ViTokenizer, ViPosTagger
 
@@ -14,8 +17,9 @@ from pyvi import ViTokenizer, ViPosTagger
 
 
 token = dict()
-token['int'] = 'INT'
-token['float'] = 'FLOAT'
+token['int'] = '<INT>'
+token['float'] = '<FLOAT>'
+token['number'] = '<number>'
 token['space'] = ' '
 token['blank'] = ''
 token['dot'] = '.'
@@ -50,7 +54,7 @@ def txt2dict(text):
     return ast.literal_eval(text)
 
 
-# In[43]:
+# In[3]:
 
 
 # \w = [a-zA-Z0-9_]
@@ -58,7 +62,7 @@ def txt2dict(text):
 # \d = [0-9]
 def remove_special_char(text):    
     # remove special character (+-*/_...) with single space   
-    text = re.sub('[^\w\s'+ vietnamese_chars +'\.]+|[_]+', token['space'], text)   
+    text = re.sub('[^\w\s'+ vietnamese_chars +'\.\\\/]+|[_]+', token['space'], text)
     # remove multi space with single space   
     text = re.sub('\s+', token['space'], text)
     # remove multi dot with one dot   
@@ -66,14 +70,16 @@ def remove_special_char(text):
     return text
 
 
-# In[44]:
+# In[2]:
 
 
 def add_token(text):
-    # remove float number with 'FLOAT'
-    text = re.sub('\d+[.,]\d+', token['float'], text)  
-    # remove int number with 'INT'   
-    text = re.sub('\d+', token['int'], text)
+    #remove number with num token
+    text = re.sub('\d+',token['number'],text)
+#     # remove float number with 'FLOAT'
+#     text = re.sub('\d+[.,]\d+', token['float'], text)  
+#     # remove int number with 'INT'   
+#     text = re.sub('\d+', token['int'], text)
     return text
 
 
