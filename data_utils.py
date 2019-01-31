@@ -10,7 +10,7 @@ import unicodedata
 from pyvi import ViTokenizer, ViPosTagger
 
 
-# In[42]:
+# In[48]:
 
 
 token = dict()
@@ -20,9 +20,34 @@ token['space'] = ' '
 token['blank'] = ''
 token['dot'] = '.'
 SPECIAL_CHARACTER = '0123456789%@$.,=+-!;/()*"&^:#|\n\t\''
+SPECIAL_CHARACTER2 = '!"#$%&()*+,-./:;<=>?@[\]^_`{|}~ '
 vietnamese_chars = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝ'
 vietnamese_chars += 'àáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠạẢảẤấẦầẨẩẪẫẬậẮắẰằẲẳẴẵẶặẸẹẺẻẼẽẾếỀềỂểỄễỆệ'
 vietnamese_chars += 'ỈỉỊịỌọỎỏỐốỒồỔổỖỗỘộỚớỜờỞởỠỡỢợỤụỦủỨứỪừỬửỮữỰựỲỳỴỵỶỷỸỹ'
+
+
+# In[1]:
+
+
+def read_all_txt_file(directiry_path):
+    txt_files = glob.glob(directiry_path + '/*.txt')
+#     log_file = open(directiry_path + 'error_log.txt', 'w+')
+    for file in txt_files:
+#         try:
+            text = open(file, 'r', encoding = 'utf-8').read()
+            text = unicode_utils.compound2unicode(text)
+#             print(file)
+            yield text
+#         except:
+#             log_file.write(file)
+#             continue
+
+
+# In[ ]:
+
+
+def txt2dict(text):
+    return ast.literal_eval(text)
 
 
 # In[43]:
